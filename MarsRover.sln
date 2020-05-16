@@ -1,0 +1,58 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarsRover.ConsoleApp", "MarsRover.ConsoleApp\MarsRover.ConsoleApp.csproj", "{60194115-A0AB-40D6-9E30-435D2909859F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarsRover.Models", "MarsRover.Models\MarsRover.Models.csproj", "{141E6D48-DE2A-47E8-B587-445D2DB8B001}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarsRover.Exceptions", "MarsRover.Exceptions\MarsRover.Exceptions.csproj", "{7FE9C32F-F358-456D-9421-6E1E66447047}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarsRover.Services", "MarsRover.Services\MarsRover.Services.csproj", "{7E0D9A80-3322-4C50-A2E8-807F5F65EC4C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarsRover.Extensions", "MarsRover.Extensions\MarsRover.Extensions.csproj", "{78B440E5-49B9-4ED9-B2A2-E83902153C5E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarsRover.ModelsTests", "MarsRover.ModelsTests\MarsRover.ModelsTests.csproj", "{A8A08AF0-7EE0-4AD6-B331-DF589C571836}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{51DD8D62-8BBC-45EF-9665-392A240A0EBA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarsRover.ServicesTests", "MarsRover.ServicesTests\MarsRover.ServicesTests.csproj", "{E1E692DE-B027-426D-9054-0DB51F0E84F0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{60194115-A0AB-40D6-9E30-435D2909859F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60194115-A0AB-40D6-9E30-435D2909859F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60194115-A0AB-40D6-9E30-435D2909859F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60194115-A0AB-40D6-9E30-435D2909859F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{141E6D48-DE2A-47E8-B587-445D2DB8B001}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{141E6D48-DE2A-47E8-B587-445D2DB8B001}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{141E6D48-DE2A-47E8-B587-445D2DB8B001}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{141E6D48-DE2A-47E8-B587-445D2DB8B001}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7FE9C32F-F358-456D-9421-6E1E66447047}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FE9C32F-F358-456D-9421-6E1E66447047}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FE9C32F-F358-456D-9421-6E1E66447047}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FE9C32F-F358-456D-9421-6E1E66447047}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E0D9A80-3322-4C50-A2E8-807F5F65EC4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E0D9A80-3322-4C50-A2E8-807F5F65EC4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E0D9A80-3322-4C50-A2E8-807F5F65EC4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E0D9A80-3322-4C50-A2E8-807F5F65EC4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78B440E5-49B9-4ED9-B2A2-E83902153C5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78B440E5-49B9-4ED9-B2A2-E83902153C5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78B440E5-49B9-4ED9-B2A2-E83902153C5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78B440E5-49B9-4ED9-B2A2-E83902153C5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8A08AF0-7EE0-4AD6-B331-DF589C571836}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8A08AF0-7EE0-4AD6-B331-DF589C571836}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8A08AF0-7EE0-4AD6-B331-DF589C571836}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8A08AF0-7EE0-4AD6-B331-DF589C571836}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1E692DE-B027-426D-9054-0DB51F0E84F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1E692DE-B027-426D-9054-0DB51F0E84F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1E692DE-B027-426D-9054-0DB51F0E84F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1E692DE-B027-426D-9054-0DB51F0E84F0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A8A08AF0-7EE0-4AD6-B331-DF589C571836} = {51DD8D62-8BBC-45EF-9665-392A240A0EBA}
+		{E1E692DE-B027-426D-9054-0DB51F0E84F0} = {51DD8D62-8BBC-45EF-9665-392A240A0EBA}
+	EndGlobalSection
+EndGlobal
