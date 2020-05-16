@@ -7,9 +7,10 @@ namespace MarsRover.Services.StreamSection.FileProcessors
     {
         public bool Exists(string fullPath)
         {
+            fullPath = fullPath?.Trim() ?? string.Empty;
             if (string.IsNullOrEmpty(fullPath))
             {
-                throw new FileNameNotValidException(fullPath);
+                throw new FileNameEmptyException();
             }
 
             return File.Exists(fullPath);

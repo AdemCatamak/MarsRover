@@ -48,7 +48,7 @@ namespace MarsRover.ServicesTests
         [Fact]
         public void WhenFileDoesNotContainsAnyVehicle__InputNotValidExceptionOccurs()
         {
-            int endOfStreamCallCount = 0;
+            var endOfStreamCallCount = 0;
             _streamReaderMock.Setup(reader => reader.EndOfStream())
                              .Returns(() =>
                                       {
@@ -65,7 +65,7 @@ namespace MarsRover.ServicesTests
         [InlineData(7)]
         public void WhenEveryVehicleDoesNotContainCommands__InputNotValidExceptionOccurs(int untilEndOfFile)
         {
-            int endOfStreamCallCount = 0;
+            var endOfStreamCallCount = 0;
             _streamReaderMock.Setup(reader => reader.EndOfStream())
                              .Returns(() =>
                                       {
@@ -81,7 +81,7 @@ namespace MarsRover.ServicesTests
         [InlineData(6, 2)]
         public void WhenEveryVehicleContainsCommands__InputNotValidExceptionOccurs(int untilEndOfFile, int expectedVehiclCount)
         {
-            int endOfStreamCallCount = 0;
+            var endOfStreamCallCount = 0;
             _streamReaderMock.Setup(reader => reader.EndOfStream())
                              .Returns(() =>
                                       {

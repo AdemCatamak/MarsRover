@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using MarsRover.Models;
 using MarsRover.Models.Surfaces;
 using MarsRover.Services.SurfaceBuilderSection.Exceptions;
@@ -10,19 +9,21 @@ namespace MarsRover.Services.SurfaceBuilderSection.SurfaceBuilders
     {
         public Surface Build(string arg)
         {
-            if (arg == null) throw new PlateauBuilderParameterNotValidException("Parameter should not be empty");
+            if (arg == null) throw new PlateauBuilderParameterNotValidException("Plateau parameter should not be empty");
 
             string[] parameters = arg.Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries);
 
-            if (parameters.Length != 2) throw new PlateauBuilderParameterNotValidException($"Parameter count not valid [parameter count: {parameters.Length} - {nameof(arg)}:{arg}]");
+            if (parameters.Length != 2) throw new PlateauBuilderParameterNotValidException($"Insufficient parameter count for modelling Plateau. [parameter count: {parameters.Length} - {nameof(arg)}:{arg}]");
 
-            if (!parameters.All(p => p.All(char.IsDigit)))
+            if (!int.TryParse(parameters[0], out int x))
             {
-                throw new PlateauBuilderParameterNotValidException($"Parameter format not valid [{arg}]");
+                throw new PlateauBuilderParameterNotValidException($"Parameters are in an invalid format for modelling Plateau [{arg}]");
             }
 
-            int x = Convert.ToInt32(parameters[0]);
-            int y = Convert.ToInt32(parameters[1]);
+            if (!int.TryParse(parameters[1], out int y))
+            {
+                throw new PlateauBuilderParameterNotValidException($"Parameters are in an invalid format for modelling Plateau [{arg}]");
+            }
 
             Surface surface = new Plateau(x, y);
             return surface;

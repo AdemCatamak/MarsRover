@@ -10,6 +10,7 @@ using MarsRover.Models;
 using MarsRover.Models.Surfaces;
 using MarsRover.Models.VehicleContexts.Exceptions;
 using MarsRover.Services.InputProviderSection.InputProviderFactories;
+using MarsRover.Services.InputProviderSection.InputProviders;
 using MarsRover.Services.StreamSection;
 using MarsRover.Services.StreamSection.FileProcessors;
 using MarsRover.Services.StreamSection.StreamReaders;
@@ -62,19 +63,22 @@ namespace MarsRover.ConsoleApp
                 ISurfaceBuilder surfaceBuilder = surfaceBuilderFactory.Generate(typeof(Plateau));
                 Surface surface = surfaceBuilder.Build(input.SurfaceParameter);
 
-                var vehicleAndActionPairList = new List<Tuple<IVehicleContext, IEnumerable<VehicleActions>>>();
                 foreach ((string vehicleParameter, string moveCommandParameter) in input.VehicleAndCommandsParameterList)
                 {
+                    IVehicleContext vehicleContext;
                     Vehicle movable = vehicleFactory.Generate(VehicleTypes.Rover, vehicleParameter);
-                    IVehicleContext vehicleContext = vehicleContextFactory.Generate(surface, movable);
+                    try
+                    {
+                        vehicleContext = vehicleContextFactory.Generate(surface, movable);
+                    }
+                    catch (VehicleDeployException)
+                    {
+                        Console.WriteLine($"Rover could not land on surface");
+                        continue;
+                    }
 
                     IEnumerable<VehicleActions> vehicleActions = vehicleActionProvider.Provide(moveCommandParameter);
 
-                    vehicleAndActionPairList.Add(new Tuple<IVehicleContext, IEnumerable<VehicleActions>>(vehicleContext, vehicleActions));
-                }
-
-                foreach ((IVehicleContext vehicleContext, IEnumerable<VehicleActions> vehicleActions) in vehicleAndActionPairList)
-                {
                     try
                     {
                         foreach (VehicleActions action in vehicleActions)
@@ -86,39 +90,43 @@ namespace MarsRover.ConsoleApp
                     }
                     catch (VehicleConnectionLostException)
                     {
-                        Console.WriteLine($"Connection lost. Rover is not on surface");
+                        Console.WriteLine($"Connection lost. Rover is not on surface anymore");
                     }
                 }
 
-                Console.WriteLine("Press any key for exit");
-                Console.ReadKey();
+                Exit(0);
             }
-        }
-
-        private static void UnhandledExceptionHandler(object sender, UnhandledExceptionEventArgs e)
-        {
-            if (e.ExceptionObject is NotValidException notValidException)
-            {
-                Console.WriteLine($"Validation exception: {notValidException.Message}");
-            }
-
-            if (e.ExceptionObject is NotFoundException notFoundException)
-            {
-                Console.WriteLine($"Requirement could not found: {notFoundException.Message}");
-            }
-
-            if (e.ExceptionObject is DevelopmentException developmentException)
-            {
-                Console.WriteLine($"This is hint for developer: {developmentException.Message}");
-            }
-
-            Environment.Exit(1);
         }
 
         private static string GetInputProviderArgument(IInputProvider inputProvider)
         {
-            Console.WriteLine(inputProvider.FormatInfo);
-            string argument = Console.ReadLine();
+            var argument = string.Empty;
+            if (inputProvider is IConsoleInputProvider)
+            {
+                Console.WriteLine("Parameters will be taken until empty line");
+                while (true)
+                {
+                    string line = Console.ReadLine();
+                    if (string.IsNullOrEmpty(line))
+                        break;
+                    argument = $"{argument} | {line}";
+                }
+            }
+            else if (inputProvider is IFileInputProvider)
+            {
+                Console.WriteLine("Filename");
+                while (string.IsNullOrEmpty(argument))
+                {
+                    argument = Console.ReadLine();
+                }
+
+                Console.WriteLine();
+            }
+            else
+            {
+                throw new DevelopmentException($"{nameof(GetInputProviderArgument)} executed for not supported provider");
+            }
+
             return argument;
         }
 
@@ -141,6 +149,38 @@ namespace MarsRover.ConsoleApp
             } while (!inputProviderType.HasValue);
 
             return inputProviderType.Value;
+        }
+
+
+        private static void UnhandledExceptionHandler(object sender, UnhandledExceptionEventArgs e)
+        {
+            if (e.ExceptionObject is NotValidException notValidException)
+            {
+                Console.WriteLine($"{notValidException.Message}");
+            }
+
+            else if (e.ExceptionObject is NotFoundException notFoundException)
+            {
+                Console.WriteLine($"{notFoundException.Message}");
+            }
+
+            else if (e.ExceptionObject is DevelopmentException developmentException)
+            {
+                Console.WriteLine($"This is hint for developer: {developmentException.Message}");
+            }
+            else
+            {
+                Console.WriteLine($"Unhandled exception occurs. {e.ExceptionObject}");
+            }
+
+            Exit(1);
+        }
+
+        private static void Exit(int exitCode)
+        {
+            Console.WriteLine("Press any key for exit");
+            Console.ReadKey();
+            Environment.Exit(exitCode);
         }
     }
 }

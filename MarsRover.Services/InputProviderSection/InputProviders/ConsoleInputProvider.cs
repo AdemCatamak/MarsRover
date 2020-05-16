@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using MarsRover.Services.InputProviderSection.Exceptions;
 
 namespace MarsRover.Services.InputProviderSection.InputProviders
@@ -8,10 +9,14 @@ namespace MarsRover.Services.InputProviderSection.InputProviders
         public Input Provide(string arg)
         {
             arg = arg ?? string.Empty;
-            string[] lines = arg.Split(new[] {"\\n", "|"}, StringSplitOptions.RemoveEmptyEntries);
+            string[] lines = arg.Split(new[] {"\\n", "|"}, StringSplitOptions.RemoveEmptyEntries)
+                                .Select(line => line.Trim())
+                                .Where(line => !string.IsNullOrEmpty(line))
+                                .ToArray()
+                ;
             if (lines == null || lines.Length == 0)
             {
-                throw new InputNotValidException("Lines should not be null or empty");
+                throw new InputNotValidException("Input should not be null or empty");
             }
 
             if (lines.Length < 3)
@@ -21,7 +26,7 @@ namespace MarsRover.Services.InputProviderSection.InputProviders
 
             if (lines.Length % 2 != 1)
             {
-                throw new InputNotValidException("Each vehicle should has at least one move");
+                throw new InputNotValidException("Each vehicle should has at least one action command");
             }
 
             var input = new Input
@@ -36,11 +41,6 @@ namespace MarsRover.Services.InputProviderSection.InputProviders
             }
 
             return input;
-        }
-
-        public string FormatInfo
-        {
-            get => "SurfaceXSize SurfaceYSize || VehicleXPosition VehicleYPosition VehicleDirection || MoveCommands";
         }
     }
 }

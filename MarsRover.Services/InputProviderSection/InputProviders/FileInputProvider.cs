@@ -18,6 +18,8 @@ namespace MarsRover.Services.InputProviderSection.InputProviders
 
         public Input Provide(string arg)
         {
+            arg = arg?.Trim() ?? string.Empty;
+
             if (!_fileProcessor.Exists(arg))
             {
                 throw new FileNotFoundException(arg);
@@ -33,30 +35,29 @@ namespace MarsRover.Services.InputProviderSection.InputProviders
             }
 
             string surfaceParameter = _streamReader.ReadLine();
-            input.SurfaceParameter = surfaceParameter;
+            input.SurfaceParameter = surfaceParameter.Trim();
 
             while (!_streamReader.EndOfStream())
             {
-                string vehicleParameter = _streamReader.ReadLine();
-                if(string.IsNullOrEmpty(vehicleParameter)) break;
-                
+                string vehicleParameter = _streamReader.ReadLine()?.Trim();
+                if (string.IsNullOrEmpty(vehicleParameter)) break;
+
                 if (_streamReader.EndOfStream())
                 {
                     throw new InputNotValidException("Each vehicle should contains at least one move command");
                 }
 
-                string moveCommandsParameter = _streamReader.ReadLine();
+                string moveCommandsParameter = _streamReader.ReadLine()?.Trim();
+                if (string.IsNullOrEmpty(moveCommandsParameter))
+                {
+                    throw new InputNotValidException("Each vehicle should contains at least one move command");
+                }
 
                 var vehicleAndMoveCommandsPair = new Tuple<string, string>(vehicleParameter, moveCommandsParameter);
                 input.VehicleAndCommandsParameterList.Add(vehicleAndMoveCommandsPair);
             }
 
             return input;
-        }
-
-        public string FormatInfo
-        {
-            get => "Filename";
         }
 
         public void Dispose()

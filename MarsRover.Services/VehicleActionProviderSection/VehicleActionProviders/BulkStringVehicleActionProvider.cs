@@ -19,7 +19,7 @@ namespace MarsRover.Services.VehicleActionProviderSection.VehicleActionProviders
                 }
                 else
                 {
-                    throw new VehicleActionIsNotValidException($"{arg} contains not valid character");
+                    throw new VehicleActionIsNotValidException(arg);
                 }
             }
 

@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using MarsRover.Models;
 using MarsRover.Models.Directions;
 using MarsRover.Models.Vehicles;
@@ -11,33 +10,31 @@ namespace MarsRover.Services.VehicleFactorySection.VehicleBuilders
     {
         public Vehicle Build(string arg)
         {
-            if (arg == null) throw new VehicleBuilderParameterNotValidException("Parameter should not be empty");
+            if (arg == null) throw new VehicleBuilderParameterNotValidException("Rover parameter should not be empty");
 
             string[] parameters = arg.Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries);
 
-            if (parameters.Length != 3) throw new VehicleBuilderParameterNotValidException("Insufficient parameter count");
+            if (parameters.Length != 3) throw new VehicleBuilderParameterNotValidException("Insufficient parameter for building Rover");
 
             string xStr = parameters[0];
             string yStr = parameters[1];
             string directionStr = parameters[2]?.ToUpperInvariant();
 
-            if (!xStr.All(char.IsDigit))
+            if (!int.TryParse(xStr, out int x))
             {
-                throw new VehicleBuilderParameterNotValidException("1st parameter format not valid");
+                throw new VehicleBuilderParameterNotValidException($"Rover's 1st parameter format not valid [{arg}]");
             }
-
-            if (!yStr.All(char.IsDigit))
+            
+            if (!int.TryParse(yStr, out int y))
             {
-                throw new VehicleBuilderParameterNotValidException("2nd parameter format not valid");
+                throw new VehicleBuilderParameterNotValidException($"Rover's 2nd parameter format not valid [{arg}]");
             }
 
             if (!Enum.IsDefined(typeof(CompassDirections), directionStr))
             {
-                throw new VehicleBuilderParameterNotValidException("3th parameter format not valid");
+                throw new VehicleBuilderParameterNotValidException($"Rover's 3th parameter format not valid [{arg}]");
             }
 
-            int x = Convert.ToInt32(xStr);
-            int y = Convert.ToInt32(yStr);
             var direction = (CompassDirections) Enum.Parse(typeof(CompassDirections), directionStr);
 
             Vehicle vehicle = new Rover(x, y, direction);
