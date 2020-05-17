@@ -55,8 +55,8 @@ namespace MarsRover.ServicesTests
 
             Assert.NotNull(vehicle);
 
-            Assert.Equal(expectedX, vehicle.CurrentPosition.X);
-            Assert.Equal(expectedY, vehicle.CurrentPosition.Y);
+            Assert.Equal(expectedX, vehicle.CurrentPoint.X);
+            Assert.Equal(expectedY, vehicle.CurrentPoint.Y);
             Assert.Equal(expectedDirection, vehicle.Facade);
         }
     }

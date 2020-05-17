@@ -7,18 +7,25 @@ namespace MarsRover.Models.Surfaces
         private const int X_MIN = 0;
         private const int Y_MIN = 0;
 
-        public Plateau(int xLength, int yLength) : base(xLength, yLength)
+        public int XLength { get; }
+        public int YLength { get; }
+
+        public Plateau(int xLength, int yLength)
         {
-            if (XLength < 0 || YLength < 0)
+            if (xLength < 0 || yLength < 0)
             {
-                throw new PlateauSizeNotValidException(XLength, YLength);
+                throw new PlateauSizeNotValidException(xLength, yLength);
             }
+
+            XLength = xLength;
+            YLength = yLength;
         }
 
-        public override bool Contains(Position position)
+        public override bool Contains(Point point)
         {
-            bool valid = !(position.X < X_MIN || position.X > XLength
-                                             || position.Y < Y_MIN || position.Y > YLength);
+            bool valid = point.X >= X_MIN && point.X <= XLength
+                                             && point.Y >= Y_MIN && point.Y <= YLength;
+
             return valid;
         }
     }

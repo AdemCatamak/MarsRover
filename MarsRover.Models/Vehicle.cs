@@ -8,7 +8,7 @@ namespace MarsRover.Models
 {
     public abstract class Vehicle : IMovable
     {
-        public Position CurrentPosition { get; protected set; }
+        public Point CurrentPoint { get; protected set; }
         public CompassDirections Facade { get; protected set; }
 
         protected Vehicle(int x, int y, CompassDirections facade)
@@ -18,30 +18,30 @@ namespace MarsRover.Models
                 throw new CompassDirectionNotValid(facade.ToString());
             }
 
-            CurrentPosition = new Position(x, y);
+            CurrentPoint = new Point(x, y);
             Facade = facade;
         }
 
         public override string ToString()
         {
-            return $"{CurrentPosition} {Facade.ToString()}";
+            return $"{CurrentPoint} {Facade.ToString()}";
         }
 
-        public void Move()
+        public void GoForward()
         {
             switch (Facade)
             {
                 case CompassDirections.N:
-                    CurrentPosition = new Position(CurrentPosition.X, CurrentPosition.Y + 1);
+                    CurrentPoint = new Point(CurrentPoint.X, CurrentPoint.Y + 1);
                     break;
                 case CompassDirections.S:
-                    CurrentPosition = new Position(CurrentPosition.X, CurrentPosition.Y - 1);
+                    CurrentPoint = new Point(CurrentPoint.X, CurrentPoint.Y - 1);
                     break;
                 case CompassDirections.E:
-                    CurrentPosition = new Position(CurrentPosition.X + 1, CurrentPosition.Y);
+                    CurrentPoint = new Point(CurrentPoint.X + 1, CurrentPoint.Y);
                     break;
                 case CompassDirections.W:
-                    CurrentPosition = new Position(CurrentPosition.X - 1, CurrentPosition.Y);
+                    CurrentPoint = new Point(CurrentPoint.X - 1, CurrentPoint.Y);
                     break;
                 default:
                     throw new DevelopmentException($"{nameof(Rover)}.{nameof(Facade)} is not valid [{Facade}]");
@@ -55,17 +55,20 @@ namespace MarsRover.Models
                 throw new RelativeDirectionNotValid(direction.ToString());
             }
 
+            CompassDirections compassDirection;
             switch (direction)
             {
                 case RelativeDirections.Left:
-                    Facade = (CompassDirections) (((int) Facade + 90) % 360);
+                    compassDirection = (CompassDirections) (((int) Facade + 90) % 360);
                     break;
                 case RelativeDirections.Right:
-                    Facade = (CompassDirections) (((int) Facade + 270) % 360);
+                    compassDirection = (CompassDirections) (((int) Facade + 270) % 360);
                     break;
                 default:
                     throw new DevelopmentException($"There is uncovered switch-case state [{direction.ToString()}]");
             }
+
+            Facade = compassDirection;
         }
     }
 }

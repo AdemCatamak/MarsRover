@@ -10,12 +10,12 @@ namespace MarsRover.ModelsTests
 {
     public class RoverContext_MoveTests
     {
-        private Mock<Surface> _surfaceMock;
+        private readonly Mock<Surface> _surfaceMock;
 
         public RoverContext_MoveTests()
         {
-            _surfaceMock = new Mock<Surface>(It.IsAny<int>(), It.IsAny<int>());
-            _surfaceMock.Setup(surface => surface.Contains(It.IsAny<Position>()))
+            _surfaceMock = new Mock<Surface>();
+            _surfaceMock.Setup(surface => surface.Contains(It.IsAny<Point>()))
                         .Returns(true);
         }
 
@@ -34,8 +34,8 @@ namespace MarsRover.ModelsTests
 
             sut.Move(vehicleAction);
 
-            Assert.Equal(x, sut.Vehicle.CurrentPosition.X);
-            Assert.Equal(y, sut.Vehicle.CurrentPosition.Y);
+            Assert.Equal(x, sut.Vehicle.CurrentPoint.X);
+            Assert.Equal(y, sut.Vehicle.CurrentPoint.Y);
             Assert.Equal(expectedDirection, sut.Vehicle.Facade);
         }
 
@@ -53,8 +53,8 @@ namespace MarsRover.ModelsTests
 
             sut.Move(VehicleActions.M);
 
-            Assert.Equal(x, sut.Vehicle.CurrentPosition.X);
-            Assert.Equal(y + 1, sut.Vehicle.CurrentPosition.Y);
+            Assert.Equal(x, sut.Vehicle.CurrentPoint.X);
+            Assert.Equal(y + 1, sut.Vehicle.CurrentPoint.Y);
             Assert.Equal(direction, sut.Vehicle.Facade);
         }
 
@@ -70,7 +70,7 @@ namespace MarsRover.ModelsTests
             var sut = new RoverContext(_surfaceMock.Object,
                                        rover);
 
-            _surfaceMock.Setup(surface => surface.Contains(It.IsAny<Position>()))
+            _surfaceMock.Setup(surface => surface.Contains(It.IsAny<Point>()))
                         .Returns(false);
 
             Assert.Throws<VehicleConnectionLostException>(() => sut.Move(VehicleActions.M));

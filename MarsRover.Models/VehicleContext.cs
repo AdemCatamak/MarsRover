@@ -15,7 +15,7 @@ namespace MarsRover.Models
             Surface = surface;
             Vehicle = vehicle;
 
-            bool positionIsInSurface = Surface.Contains(Vehicle.CurrentPosition);
+            bool positionIsInSurface = Surface.Contains(Vehicle.CurrentPoint);
             if (!positionIsInSurface) throw new VehicleDeployException();
         }
 
@@ -35,8 +35,8 @@ namespace MarsRover.Models
                     Vehicle.Turn(RelativeDirections.Right);
                     break;
                 case VehicleActions.M:
-                    Vehicle.Move();
-                    bool positionIsInSurface = Surface.Contains(Vehicle.CurrentPosition);
+                    Vehicle.GoForward();
+                    bool positionIsInSurface = Surface.Contains(Vehicle.CurrentPoint);
                     if (!positionIsInSurface) throw new VehicleConnectionLostException();
                     break;
                 default:

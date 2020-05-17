@@ -11,11 +11,11 @@ namespace MarsRover.ModelsTests
         public void WhenMoveOperationExecuted_CurrentPositionShouldNotBeSame()
         {
             var sut = new Rover();
-            var initialPosition = new Position(sut.CurrentPosition.X, sut.CurrentPosition.Y);
+            var initialPosition = new Point(sut.CurrentPoint.X, sut.CurrentPoint.Y);
 
-            sut.Move();
+            sut.GoForward();
 
-            Assert.NotEqual(initialPosition, sut.CurrentPosition);
+            Assert.NotEqual(initialPosition, sut.CurrentPoint);
         }
 
         [Theory]
@@ -31,11 +31,11 @@ namespace MarsRover.ModelsTests
                                                                        int expectedX, int expectedY)
         {
             var sut = new Rover(currentX, currentY, currentDirection);
-            var expectedPosition = new Position(expectedX, expectedY);
+            var expectedPosition = new Point(expectedX, expectedY);
 
-            sut.Move();
+            sut.GoForward();
 
-            Assert.Equal(expectedPosition, sut.CurrentPosition);
+            Assert.Equal(expectedPosition, sut.CurrentPoint);
             Assert.Equal(currentDirection, sut.Facade);
         }
     }

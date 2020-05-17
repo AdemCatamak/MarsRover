@@ -20,7 +20,7 @@ namespace MarsRover.ModelsTests
         {
             var sut = new Plateau(2, 2);
 
-            bool result = sut.Contains(new Position(x, y));
+            bool result = sut.Contains(new Point(x, y));
 
             Assert.True(result);
         }
@@ -37,7 +37,7 @@ namespace MarsRover.ModelsTests
         {
             var sut = new Plateau(2, 2);
 
-            bool result = sut.Contains(new Position(x, y));
+            bool result = sut.Contains(new Point(x, y));
 
             Assert.False(result);
         }
@@ -54,7 +54,7 @@ namespace MarsRover.ModelsTests
         {
             var sut = new Plateau(2, 2);
 
-            bool result = sut.Contains(new Position(x, y));
+            bool result = sut.Contains(new Point(x, y));
 
             Assert.False(result);
         }

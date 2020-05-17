@@ -2,12 +2,12 @@ using System;
 
 namespace MarsRover.Models
 {
-    public class Position : IEquatable<Position>
+    public class Point : IEquatable<Point>
     {
         public int X { get; }
         public int Y { get; }
 
-        public Position(int x, int y)
+        public Point(int x, int y)
         {
             X = x;
             Y = y;
@@ -18,7 +18,7 @@ namespace MarsRover.Models
             return $"{X.ToString()} {Y.ToString()}";
         }
 
-        public bool Equals(Position other)
+        public bool Equals(Point other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
@@ -30,7 +30,7 @@ namespace MarsRover.Models
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != this.GetType()) return false;
-            return Equals((Position) obj);
+            return Equals((Point) obj);
         }
 
         public override int GetHashCode()

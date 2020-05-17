@@ -53,10 +53,11 @@ namespace MarsRover.ServicesTests
 
             Assert.NotNull(surface);
 
-            Assert.Equal(expectedX, surface.XLength);
-            Assert.Equal(expectedY, surface.YLength);
+            var plateau = surface as Plateau;
+            Assert.NotNull(plateau);
 
-            Assert.True(surface is Plateau);
+            Assert.Equal(expectedX, plateau.XLength);
+            Assert.Equal(expectedY, plateau.YLength);
         }
     }
 }
